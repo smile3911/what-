@@ -82,7 +82,7 @@ for _, sound in pairs(hitsounds) do
     end
 end
 
-local woah = library:New("smitedbysmile.cc")
+local woah = library:New("smile.lol")
 local misc = woah:Tab("Combat")
 local gaey = woah:Tab("Mods")
 local visu = woah:Tab("Visualization")
@@ -284,8 +284,8 @@ if getgenv().Settings.NyulaRemake.Enabled then
                 if getgenv().Settings.NyulaRemake.NOTIF == true then
                     Plr = getClosestPlayerToCursor()
          las.Parent = nil       game.StarterGui:SetCore("SendNotification", {
-                    Title = "Astral.lua";
-                    Text = "Unlocked",
+                    Title = "smile.lol";
+                    Text = "spared 🙏",
                     Duration = 5
                 })
             end
@@ -353,8 +353,8 @@ end)
                 if getgenv().Settings.NyulaRemake.NOTIF == true then
  
                     game.StarterGui:SetCore("SendNotification", {
-                        Title = "Astral.lua";
-                        Text = "Target: "..tostring(Plr.Character.Humanoid.DisplayName),
+                        Title = "smile.lol";
+                        Text = "nigga: "..tostring(Plr.Character.Humanoid.DisplayName),
                         Duration = 5
                     })
  
@@ -392,7 +392,7 @@ local LocalHL = Instance.new("Highlight")
             placemarker.CFrame = CFrame.new(Plr.Character.HumanoidRootPart.Position+Vector3.new(Plr.Character.HumanoidRootPart.AssemblyLinearVelocity.X*getgenv().Settings.NyulaRemake.PREDICTION,Plr.Character.HumanoidRootPart.AssemblyLinearVelocity.Y*getgenv().Settings.NyulaRemake.JUMPPREDICTION,Plr.Character.HumanoidRootPart.AssemblyLinearVelocity.Z*getgenv().Settings.NyulaRemake.PREDICTION))         
 LocalHL.Parent = Plr.Character
 LocalHL.FillTransparency = 0.2
-LocalHL.FillColor = Color3.fromRGB(48, 113, 169)
+LocalHL.FillColor = Color3.fromRGB(255, 0, 0)
 LocalHL.OutlineColor = Color3.fromRGB(0,0,0)
         else
             placemarker.CFrame = CFrame.new(0, 9999, 0)
