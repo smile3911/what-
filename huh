@@ -1,3 +1,5 @@
+local library = loadstring(game:HttpGet("https://raw.githubusercontent.com/bobbbb-b/nyulabutlowbudget/main/Lib%20(1).txt"))()
+
 -- Gui to Lua
 -- Version: 3.2
 
@@ -14,54 +16,29 @@ ScreenGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
 ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 
 Frame.Parent = ScreenGui
-Frame.BackgroundColor3 = Color3.fromRGB(26, 26, 26)
-Frame.BackgroundTransparency = 0.500
-Frame.Position = UDim2.new(0.858712733, 0, 0.0237762257, 0)
-Frame.Size = UDim2.new(0.129513338, 0, 0.227972031, 0)
+Frame.BackgroundColor3 = Color3.fromRGB(255, 0, 0)
+Frame.BackgroundTransparency = 0
+Frame.Position = UDim2.new(1, -120, 0, 0)
+Frame.Size = UDim2.new(0, 100, 0, 50)
 
 TextButton.Parent = Frame
-TextButton.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+TextButton.BackgroundColor3 = Color3.fromRGB(255, 0, 0)
 TextButton.BackgroundTransparency = 1.000
 TextButton.Size = UDim2.new(1, 0, 1, 0)
 TextButton.Font = Enum.Font.SourceSans
-TextButton.Text = "Azure"
+TextButton.Text = "smile"
 TextButton.TextColor3 = Color3.fromRGB(0, 0, 0)
 TextButton.TextScaled = true
-TextButton.TextSize = 50.000
+TextButton.TextSize = 30
 TextButton.TextStrokeColor3 = Color3.fromRGB(255, 255, 255)
 TextButton.TextStrokeTransparency = 0.000
 TextButton.TextWrapped = true
 TextButton.MouseButton1Down:Connect(function()
-	game:GetService("VirtualInputManager"):SendKeyEvent(true, "RightShift" , false , game)
+library:ToggleMenu()
 end)
 
 UITextSizeConstraint.Parent = TextButton
-UITextSizeConstraint.MaxTextSize = 50
-
-getgenv().keytoclick = "Q"
-tool = Instance.new("Tool")
-tool.RequiresHandle = false
-tool.Name ="Azure"
-tool.Activated:connect(function()
-    local vim = game:service("VirtualInputManager")
-vim:SendKeyEvent(true, keytoclick, false, game)
-end)
-tool.Parent = game.Players.LocalPlayer.Backpack
-
-local player = game.Players.LocalPlayer
-
--- Function to connect character respawn event
-local function connectCharacterAdded()
-    player.CharacterAdded:Connect(onCharacterAdded)
-end
-
--- Connect the CharacterAdded event
-connectCharacterAdded()
-
--- Keep the GUI visible when the character dies
-player.CharacterRemoving:Connect(function()
-    tool.Parent = game.Players.LocalPlayer.Backpack
-end)
+UITextSizeConstraint.MaxTextSize = 30
 
 local player = game.Players.LocalPlayer
 
@@ -81,404 +58,565 @@ connectCharacterAdded()
 -- Keep the GUI visible when the character dies
 player.CharacterRemoving:Connect(function()
     ScreenGui.Parent = nil
-end)
+end) 
 
-repeat wait() until game:IsLoaded()
-
-game:GetService("CorePackages").Packages:Destroy()
-
-assert(getrawmetatable)
-grm = getrawmetatable(game)
-setreadonly(grm, false)
-old = grm.__namecall
-grm.__namecall = newcclosure(function(self, ...)
-    local args = {...}
-    if tostring(args[1]) == "TeleportDetect" then
-        return
-    elseif tostring(args[1]) == "CHECKER_1" then
-        return
-    elseif tostring(args[1]) == "CHECKER" then
-        return
-    elseif tostring(args[1]) == "GUI_CHECK" then
-        return
-    elseif tostring(args[1]) == "OneMoreTime" then
-        return
-    elseif tostring(args[1]) == "checkingSPEED" then
-        return
-    elseif tostring(args[1]) == "BANREMOTE" then
-        return
-    elseif tostring(args[1]) == "PERMAIDBAN" then
-        return
-    elseif tostring(args[1]) == "KICKREMOTE" then
-        return
-    elseif tostring(args[1]) == "BR_KICKPC" then
-        return
-    elseif tostring(args[1]) == "BR_KICKMOBILE" then
-        return
-    end
-    return old(self, ...)
-end)
-
-local library = { 
-	flags = { }, 
-	items = { } 
+local hitsounds = {
+    {name = "bell.wav", url = "https://github.com/nyulachan/nyula/blob/main/Sounds/bell.wav?raw=true"},
+    {name = "bepis.wav", url = "https://github.com/nyulachan/nyula/blob/main/Sounds/bepis.wav?raw=true"},
+    {name = "bubble.wav", url = "https://github.com/nyulachan/nyula/blob/main/Sounds/bubble.wav?raw=true"},
+    {name = "cock.wav", url = "https://github.com/nyulachan/nyula/blob/main/Sounds/cock.wav?raw=true"},
+    {name = "cod.wav", url = "https://github.com/nyulachan/nyula/blob/main/Sounds/cod.wav?raw=true"},
+    {name = "fatality.wav", url = "https://github.com/nyulachan/nyula/blob/main/Sounds/fatality.wav?raw=true"},
+    {name = "phonk.wav", url = "https://github.com/nyulachan/nyula/blob/main/Sounds/phonk.wav?raw=true"},
+    {name = "sparkle.wav", url = "https://github.com/nyulachan/nyula/blob/main/Sounds/sparkle.wav?raw=true"}
 }
 
-local players = game:GetService("Players")
-local uis = game:GetService("UserInputService")
-local runservice = game:GetService("RunService")
-local tweenservice = game:GetService("TweenService")
-local marketplaceservice = game:GetService("MarketplaceService")
-local textservice = game:GetService("TextService")
-local coregui = game:GetService("CoreGui")
-local httpservice = game:GetService("HttpService")
+if not isfolder("hitsounds") then
+    makefolder("hitsounds")
+end
 
-local player = players.LocalPlayer
-local mouse = player:GetMouse()
-local camera = game.Workspace.CurrentCamera
-
-library.theme = {
-    fontsize = 17,
-    titlesize = 18,
-    font = Enum.Font.Code,
-    background = "rbxassetid://0",
-    tilesize = 90,
-    cursor = false,
-    cursorimg = "https://t0.rbxcdn.com/42f66da98c40252ee151326a82aab51f",
-    backgroundcolor = Color3.fromRGB(20, 20, 20),
-    tabstextcolor = Color3.fromRGB(168,122,207),
-    bordercolor = Color3.fromRGB(75, 207, 255),
-    accentcolor = Color3.fromRGB(168,122,207),
-    accentcolor2 = Color3.fromRGB(88,65,108),
-    outlinecolor = Color3.fromRGB(20,20,20),
-    outlinecolor2 = Color3.fromRGB(30,30,30),--119, 64, 167
-    sectorcolor = Color3.fromRGB(30, 30, 30),
-    toptextcolor = Color3.fromRGB(255, 255, 255),
-    topheight = 48,
-    topcolor = Color3.fromRGB(30, 30, 30),
-    topcolor2 = Color3.fromRGB(12,12,12), -- Color3.fromRGB(12, 12, 12),
-    buttoncolor = Color3.fromRGB(49, 49, 49),
-    buttoncolor2 = Color3.fromRGB(29,29,29),
-    itemscolor = Color3.fromRGB(170, 170, 170),
-    itemscolor2 = Color3.fromRGB(255,255,255)
-}
-
-if library.theme.cursor and Drawing then
-    local success = pcall(function() 
-        library.cursor = Drawing.new("Image")
-        library.cursor.Data = game:HttpGet(library.theme.cursorimg)
-        library.cursor.Size = Vector2.new(64, 64)
-        library.cursor.Visible = uis.MouseEnabled
-        library.cursor.Rounding = 0
-        library.cursor.Position = Vector2.new(mouse.X - 32, mouse.Y + 6)
-    end)
-    if success and library.cursor then
-        uis.InputChanged:Connect(function(input)
-            if uis.MouseEnabled then
-                if input.UserInputType == Enum.UserInputType.MouseMovement then
-                    library.cursor.Position = Vector2.new(input.Position.X - 32, input.Position.Y + 7)
-                end
-            end
-        end)
-        
-        game:GetService("RunService").RenderStepped:Connect(function()
-            uis.OverrideMouseIconBehavior = Enum.OverrideMouseIconBehavior.ForceHide
-            library.cursor.Visible = uis.MouseEnabled and (uis.MouseIconEnabled or game:GetService("GuiService").MenuIsOpen)
-        end)
-    elseif not success and library.cursor then
-        library.cursor:Remove()
+for _, sound in pairs(hitsounds) do
+    local path = "hitsounds" .. "/" .. sound.name
+    if not isfile(path) then
+        writefile(path, game:HttpGet(sound.url))
     end
 end
 
-function library:CreateWatermark(name, position)
-    local gamename = marketplaceservice:GetProductInfo(game.PlaceId).Name
-    local watermark = { }
-    watermark.Visible = true
-    watermark.text = " " .. name:gsub("{game}", gamename):gsub("{fps}", "0 FPS") .. " "
+local woah = library:New("Astral.lua")
+local misc = woah:Tab("Combat")
+local gaey = woah:Tab("Mods")
+local visu = woah:Tab("Visualization")
+local braeuh = woah:Tab("Configs")
 
-    watermark.main = Instance.new("ScreenGui", coregui)
-    watermark.main.Name = "Watermark"
-    if syn then
-        syn.protect_gui(watermark.main)
+local Haka = gaey:MSector("Mods", "Left")
+local Lalaka = Haka:Tab("Local")
+local Halaka = Haka:Tab("Anti")
+local Galala = Haka:Tab("CSync")
+local Bakala = Haka:Tab("Fun")
+
+Lalaka:Element("Button", "CFrame Speed", {}, function() 
+-- Initial values
+getgenv().Speed = false
+getgenv().SpeedAmount = 2
+-- Create a basic GUI
+local ScreenGui = Instance.new("ScreenGui")
+ScreenGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+ScreenGui.ResetOnSpawn = false
+
+local ToggleButton = Instance.new("TextButton")
+ToggleButton.Text = "Toggle Speed"
+ToggleButton.Parent = ScreenGui
+ToggleButton.BackgroundTransparency = 0.5
+ToggleButton.BorderSizePixel = 0
+ToggleButton.Position = UDim2.new(1, -120, 0, 55) -- Adjusted the position to top right corner
+ToggleButton.Size = UDim2.new(0, 100, 0, 18)
+ToggleButton.BackgroundColor3 = Color3.fromRGB(255, 0, 0)
+ToggleButton.TextColor3 = Color3.fromRGB(255, 0, 0)
+
+local UICorner = Instance.new("UICorner")
+UICorner.Parent = ToggleButton
+
+local function onButtonClicked()
+    getgenv().Speed = not getgenv().Speed
+end
+
+ToggleButton.MouseButton1Click:Connect(onButtonClicked)
+
+-- Your existing code modified for the GUI
+game:GetService("RunService").Stepped:Connect(function()
+    if getgenv().Speed then
+        local lPlr = game:GetService("Players").LocalPlayer
+        lPlr.Character.HumanoidRootPart.CFrame = lPlr.Character.HumanoidRootPart.CFrame + lPlr.Character.Humanoid.MoveDirection * getgenv().SpeedAmount
     end
+end)
+end)
 
-    if getgenv().watermark then
-        getgenv().watermark:Remove()
-    end
-    getgenv().watermark = watermark.main
+Lalaka:Element("TextBox", "SpeedaAmount", {placeholder = "Prediction"})
+
+Lalaka:Element("Button", "Save", {}, function() 
+getgenv().SpeedAmount = values.Haka.Lalaka.SpeedaAmount.Text
+end)
+
+--// TARGET LOCK
+
+local Jaja = misc:MSector("Target Lock", "Left")
+local GAGEJ = Jaja:Tab("Main")
+
+
+GAGEJ:Element("Button", "Load Target", {}, function() 
+getgenv().getgenv().Settings = {
+    NyulaRemake = {
+        Enabled = true,
+        PREDICTION = 0.14284,
+        JUMPPREDICTION = 0.1184,
+        DOT = true,
+        AIRSHOT = false,
+        NOTIF = true,
+        AUTOPRED = false,
+        FOV = math.huge,
+        RESOLVER = false,
+        LOCKTYPE = "Index",
+        Resolver = {
+              Enabled = false,
+              Type = "None",
+        },
+        OnHit = {
+             Enabled = false,
+             Hitchams = {
+                   Enabled = false,
+                   Color = Color3.fromRGB(255,255,255),
+             },
+            Hitsounds = {
+                  Enabled = false,
+                  Sound = "hitsounds/sparkle.wav",
+            },
+        }
+    }
+}
+
+local SelectedPart = "HumanoidRootPart" --// LowerTorso, UpperTorso, Head
+local Prediction = true
+
+--// Change Prediction,  AutoPrediction Must Be Off
+
+    local AnchorCount = 0
+    local MaxAnchor = 50
+ 
+    local CC = game:GetService"Workspace".CurrentCamera
+    local Plr;
+    local enabled = false
     
-    watermark.mainbar = Instance.new("Frame", watermark.main)
-    watermark.mainbar.Name = "Main"
-    watermark.mainbar.BorderColor3 = Color3.fromRGB(80, 80, 80)
-    watermark.mainbar.Visible = watermark.Visible
-    watermark.mainbar.BorderSizePixel = 0
-    watermark.mainbar.ZIndex = 5
-    watermark.mainbar.Position = UDim2.new(0, position and position.X or 10, 0, position and position.Y or 10)
-    watermark.mainbar.Size = UDim2.new(0, 0, 0, 25)
-
-    watermark.Gradient = Instance.new("UIGradient", watermark.mainbar)
-    watermark.Gradient.Rotation = 90
-    watermark.Gradient.Color = ColorSequence.new({ ColorSequenceKeypoint.new(0.00, Color3.fromRGB(40, 40, 40)), ColorSequenceKeypoint.new(1.00, Color3.fromRGB(10, 10, 10)) })
-
-    watermark.Outline = Instance.new("Frame", watermark.mainbar)
-    watermark.Outline.Name = "outline"
-    watermark.Outline.ZIndex = 4
-    watermark.Outline.BorderSizePixel = 0
-    watermark.Outline.Visible = watermark.Visible
-    watermark.Outline.BackgroundColor3 = library.theme.outlinecolor
-    watermark.Outline.Position = UDim2.fromOffset(-1, -1)
-
-    watermark.BlackOutline = Instance.new("Frame", watermark.mainbar)
-    watermark.BlackOutline.Name = "blackline"
-    watermark.BlackOutline.ZIndex = 3
-    watermark.BlackOutline.BorderSizePixel = 0
-    watermark.BlackOutline.BackgroundColor3 = library.theme.outlinecolor2
-    watermark.BlackOutline.Visible = watermark.Visible
-    watermark.BlackOutline.Position = UDim2.fromOffset(-2, -2)
-
-    watermark.label = Instance.new("TextLabel", watermark.mainbar)
-    watermark.label.Name = "FPSLabel"
-    watermark.label.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-    watermark.label.BackgroundTransparency = 1.000
-    watermark.label.Position = UDim2.new(0, 0, 0, 0)
-    watermark.label.Size = UDim2.new(0, 238, 0, 25)
-    watermark.label.Font = library.theme.font
-    watermark.label.ZIndex = 6
-    watermark.label.Visible = watermark.Visible
-    watermark.label.Text = watermark.text
-    watermark.label.TextColor3 = Color3.fromRGB(255, 255, 255)
-    watermark.label.TextSize = 15
-    watermark.label.TextStrokeTransparency = 0.000
-    watermark.label.TextXAlignment = Enum.TextXAlignment.Left
-    watermark.label.Size = UDim2.new(0, watermark.label.TextBounds.X+10, 0, 25)
-    
-    watermark.topbar = Instance.new("Frame", watermark.mainbar)
-    watermark.topbar.Name = "TopBar"
-    watermark.topbar.ZIndex = 6
-    watermark.topbar.BackgroundColor3 = library.theme.accentcolor
-    watermark.topbar.BorderSizePixel = 0
-    watermark.topbar.Visible = watermark.Visible
-    watermark.topbar.Size = UDim2.new(0, 0, 0, 1)
-
-    watermark.mainbar.Size = UDim2.new(0, watermark.label.TextBounds.X, 0, 25)
-    watermark.topbar.Size = UDim2.new(0, watermark.label.TextBounds.X+6, 0, 1)
-    watermark.Outline.Size = watermark.mainbar.Size + UDim2.fromOffset(2, 2)
-    watermark.BlackOutline.Size = watermark.mainbar.Size + UDim2.fromOffset(4, 4)
-
-    watermark.mainbar.Size = UDim2.new(0, watermark.label.TextBounds.X+4, 0, 25)    
-    watermark.label.Size = UDim2.new(0, watermark.label.TextBounds.X+4, 0, 25)
-    watermark.topbar.Size = UDim2.new(0, watermark.label.TextBounds.X+6, 0, 1)
-    watermark.Outline.Size = watermark.mainbar.Size + UDim2.fromOffset(2, 2)
-    watermark.BlackOutline.Size = watermark.mainbar.Size + UDim2.fromOffset(4, 4)
-
-    local startTime, counter, oldfps = os.clock(), 0, nil
-    runservice.Heartbeat:Connect(function()
-        watermark.label.Visible = watermark.Visible
-        watermark.mainbar.Visible = watermark.Visible
-        watermark.topbar.Visible = watermark.Visible
-        watermark.Outline.Visible = watermark.Visible
-        watermark.BlackOutline.Visible = watermark.Visible
-
-        if not name:find("{fps}") then
-            watermark.label.Text = " " .. name:gsub("{game}", gamename):gsub("{fps}", "0 FPS") .. " "
+    local mouse = game.Players.LocalPlayer:GetMouse()
+    local placemarker = Instance.new("Part", game.Workspace)
+ 
+    function makemarker(Parent, Adornee, Color, Size, Size2)
+        local e = Instance.new("BillboardGui", Parent)
+        e.Name = "PP"
+        e.Adornee = Adornee
+        e.Size = UDim2.new(Size, Size2, Size, Size2)
+        e.AlwaysOnTop = getgenv().Settings.NyulaRemake.DOT
+        local a = Instance.new("Frame", e)
+        if getgenv().Settings.NyulaRemake.DOT == true then
+        a.Size = UDim2.new(1, 1, 1, 1)
+        else
+        a.Size = UDim2.new(0, 0, 0, 0)
         end
-
-        if name:find("{fps}") then
-            local currentTime = os.clock()
-            counter = counter + 1
-            if currentTime - startTime >= 1 then 
-                local fps = math.floor(counter / (currentTime - startTime))
-                counter = 0
-                startTime = currentTime
-
-                if fps ~= oldfps then
-                    watermark.label.Text = " " .. name:gsub("{game}", gamename):gsub("{fps}", fps .. " FPS") .. " "
-        
-                    watermark.label.Size = UDim2.new(0, watermark.label.TextBounds.X+10, 0, 25)
-                    watermark.mainbar.Size = UDim2.new(0, watermark.label.TextBounds.X, 0, 25)
-                    watermark.topbar.Size = UDim2.new(0, watermark.label.TextBounds.X, 0, 1)
-
-                    watermark.Outline.Size = watermark.mainbar.Size + UDim2.fromOffset(2, 2)
-                    watermark.BlackOutline.Size = watermark.mainbar.Size + UDim2.fromOffset(4, 4)
+        if getgenv().Settings.NyulaRemake.DOT == true then
+        a.Transparency = 0
+        a.BackgroundTransparency = 0
+        else
+        a.Transparency = 1
+        a.BackgroundTransparency = 1
+        end
+        a.BackgroundColor3 = Color
+        local g = Instance.new("UICorner", a)
+        if getgenv().Settings.NyulaRemake.DOT == false then
+        g.CornerRadius = UDim.new(1, 1)
+        else
+        g.CornerRadius = UDim.new(1, 1) 
+        end
+        return(e)
+    end
+ 
+ 
+    local data = game.Players:GetPlayers()
+    function noob(player)
+        local character
+        repeat wait() until player.Character
+        local handler = makemarker(guimain, player.Character:WaitForChild(SelectedPart), Color3.fromRGB(107, 184, 255), 0.3, 3)
+        handler.Name = player.Name
+        player.CharacterAdded:connect(function(Char) handler.Adornee = Char:WaitForChild(SelectedPart) end)
+ 
+ 
+        spawn(function()
+            while wait() do
+                if player.Character then
                 end
-                oldfps = fps
+            end
+        end)
+    end
+ 
+    for i = 1, #data do
+        if data[i] ~= game.Players.LocalPlayer then
+            noob(data[i])
+        end
+    end
+ 
+    game.Players.PlayerAdded:connect(function(Player)
+        noob(Player)
+    end)
+ 
+    spawn(function()
+        placemarker.Anchored = true
+        placemarker.CanCollide = false
+        if getgenv().Settings.NyulaRemake.DOT == true then
+        placemarker.Size = Vector3.new(0, 0, 0)
+        else
+        placemarker.Size = Vector3.new(0, 0, 0)
+        end
+        placemarker.Transparency = 0.75
+        if getgenv().Settings.NyulaRemake.DOT then
+        makemarker(placemarker, placemarker, Color3.fromRGB(48, 113, 169), 1, 0)
+        end
+    end)
+ 
+    local Tool = Instance.new("Tool")
+Tool.RequiresHandle = false
+Tool.Name = "Astral Lock"
+Tool.Parent = game.Players.LocalPlayer.Backpack
+
+local player = game.Players.LocalPlayer
+
+local function connectCharacterAdded()
+    player.CharacterAdded:Connect(onCharacterAdded)
+end
+
+connectCharacterAdded()
+
+player.CharacterRemoving:Connect(function()
+    Tool.Parent = game.Players.LocalPlayer.Backpack
+end)
+
+Tool.Activated:Connect(function()
+if getgenv().Settings.NyulaRemake.Enabled then
+            if enabled == true then
+                enabled = false
+                if getgenv().Settings.NyulaRemake.NOTIF == true then
+                    Plr = getClosestPlayerToCursor()
+         las.Parent = nil       game.StarterGui:SetCore("SendNotification", {
+                    Title = "Astral.lua";
+                    Text = "Unlocked",
+                    Duration = 5
+                })
+            end
+            else
+                Plr = getClosestPlayerToCursor()
+                enabled = true
+local char = Plr.Character or Plr.CharacterAdded:Wait()
+local hum = char:FindFirstChild("Humanoid")
+local oldHealth = hum.Health
+
+function hitchams(gay) 
+    if currentClone then
+        currentClone:Destroy()
+    end
+
+    gay.Character.Archivable = true
+    local Clone = gay.Character:Clone()           
+    for _, Obj in next, Clone:GetDescendants() do
+        if Obj.Name == "HumanoidRootPart" or Obj:IsA("Humanoid") or Obj:IsA("LocalScript") or Obj:IsA("Script") or Obj:IsA("Decal") then
+            Obj:Destroy()
+        elseif Obj:IsA("BasePart") or Obj:IsA("MeshPart") or Obj:IsA("Part") then
+            if Obj.Transparency == 1 then
+                Obj:Destroy()
+            else
+                Obj.CanCollide = false
+                Obj.Anchored = true
+                Obj.Material = Enum.Material.ForceField
+                Obj.Color = getgenv().Settings.NyulaRemake.OnHit.Hitchams.Color
+                Obj.Transparency = 0
+                Obj.Size = Obj.Size + Vector3.new(0.03, 0.03, 0.03)
+            end
+        end
+    end
+    Clone.Parent = workspace
+    currentClone = Clone
+    local start = tick()
+    local connection
+    connection = game:GetService("RunService").Heartbeat:Connect(function()
+        if tick() - start >= 3 then
+            connection:Disconnect() 
+            Clone:Destroy()
+            currentClone = nil
+        end
+    end)
+end
+
+hum.HealthChanged:Connect(function(newHealth)
+
+    if newHealth < oldHealth then
+if getgenv().Settings.NyulaRemake.OnHit.Hitsounds.Enabled then
+        print("niggas")
+                    local las = Instance.new("Sound")
+                    las.Name = "a"
+                    las.Volume = 1
+                    las.SoundId = getcustomasset(getgenv().Settings.NyulaRemake.OnHit.Hitsounds.Sound)
+                    las.Parent = game:GetService("SoundService")
+                    las.Playing = true
+    end
+if getgenv().Settings.NyulaRemake.OnHit.Hitchams.Enabled then
+hitchams(Plr)
+end
+local oldHealth = newHealth
+end
+end)
+                if getgenv().Settings.NyulaRemake.NOTIF == true then
+ 
+                    game.StarterGui:SetCore("SendNotification", {
+                        Title = "Astral.lua";
+                        Text = "Target: "..tostring(Plr.Character.Humanoid.DisplayName),
+                        Duration = 5
+                    })
+ 
+                end
             end
         end
     end)
-
-    watermark.mainbar.MouseEnter:Connect(function()
-        tweenservice:Create(watermark.mainbar, TweenInfo.new(0.1, Enum.EasingStyle.Linear, Enum.EasingDirection.In), { BackgroundTransparency = 1, Active = false }):Play()
-        tweenservice:Create(watermark.topbar, TweenInfo.new(0.1, Enum.EasingStyle.Linear, Enum.EasingDirection.In), { BackgroundTransparency = 1, Active = false }):Play()
-        tweenservice:Create(watermark.label, TweenInfo.new(0.1, Enum.EasingStyle.Linear, Enum.EasingDirection.In), { TextTransparency = 1, Active = false }):Play()
-        tweenservice:Create(watermark.Outline, TweenInfo.new(0.1, Enum.EasingStyle.Linear, Enum.EasingDirection.In), { BackgroundTransparency = 1, Active = false }):Play()
-        tweenservice:Create(watermark.BlackOutline, TweenInfo.new(0.1, Enum.EasingStyle.Linear, Enum.EasingDirection.In), { BackgroundTransparency = 1, Active = false }):Play()
-    end)
-    
-    watermark.mainbar.MouseLeave:Connect(function()
-        tweenservice:Create(watermark.mainbar, TweenInfo.new(0.1, Enum.EasingStyle.Linear, Enum.EasingDirection.In), { BackgroundTransparency = 0, Active = true }):Play()
-        tweenservice:Create(watermark.topbar, TweenInfo.new(0.1, Enum.EasingStyle.Linear, Enum.EasingDirection.In), { BackgroundTransparency = 0, Active = true }):Play()
-        tweenservice:Create(watermark.label, TweenInfo.new(0.1, Enum.EasingStyle.Linear, Enum.EasingDirection.In), { TextTransparency = 0, Active = true }):Play()
-        tweenservice:Create(watermark.Outline, TweenInfo.new(0.1, Enum.EasingStyle.Linear, Enum.EasingDirection.In), { BackgroundTransparency = 0, Active = true }):Play()
-        tweenservice:Create(watermark.BlackOutline, TweenInfo.new(0.1, Enum.EasingStyle.Linear, Enum.EasingDirection.In), { BackgroundTransparency = 0, Active = true }):Play()
-    end)
-
-    function watermark:UpdateTheme(theme)
-        theme = theme or library.theme
-        watermark.Outline.BackgroundColor3 = theme.outlinecolor
-        watermark.BlackOutline.BackgroundColor3 = theme.outlinecolor2
-        watermark.label.Font = theme.font
-        watermark.topbar.BackgroundColor3 = theme.accentcolor
-    end
-
-    return watermark
-end
-
-function library:CreateWindow(name, size, hidebutton)
-    local window = { }
-
-    window.name = name or ""
-    window.size = UDim2.fromOffset(size.X, size.Y) or UDim2.fromOffset(492, 598)
-    window.hidebutton = hidebutton or Enum.KeyCode.RightShift
-    window.theme = library.theme
-
-    local updateevent = Instance.new("BindableEvent")
-    function window:UpdateTheme(theme)
-        updateevent:Fire(theme or library.theme)
-        window.theme = (theme or library.theme)
-    end
-
-    window.Main = Instance.new("ScreenGui", coregui)
-    window.Main.Name = name
-    window.Main.DisplayOrder = 15
-    if syn then
-        syn.protect_gui(window.Main)
-    end
-
-    if getgenv().uilib then
-        getgenv().uilib:Remove()
-    end
-    getgenv().uilib = window.Main
-
-    local dragging, dragInput, dragStart, startPos
-    uis.InputChanged:Connect(function(input)
-        if input == dragInput and dragging then
-            local delta = input.Position - dragStart
-            window.Frame.Position = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X, startPos.Y.Scale, startPos.Y.Offset + delta.Y)
-        end
-    end)
-
-    local dragstart = function(input)
-        if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
-            dragging = true
-            dragStart = input.Position
-            startPos = window.Frame.Position
-            
-            input.Changed:Connect(function()
-                if input.UserInputState == Enum.UserInputState.End then
-                    dragging = false
+ 
+ 
+ 
+    function getClosestPlayerToCursor()
+        local closestPlayer
+        local shortestDistance = getgenv().Settings.NyulaRemake.FOV
+ 
+        for i, v in pairs(game.Players:GetPlayers()) do
+            if v ~= game.Players.LocalPlayer and v.Character and v.Character:FindFirstChild("Humanoid") and v.Character.Humanoid.Health ~= 0 and v.Character:FindFirstChild("HumanoidRootPart") then
+                local pos = CC:WorldToViewportPoint(v.Character.PrimaryPart.Position)
+                local magnitude = (Vector2.new(pos.X, pos.Y) - Vector2.new(mouse.X, mouse.Y)).magnitude
+                if magnitude < shortestDistance then
+                    closestPlayer = v
+                    shortestDistance = magnitude
                 end
-            end)
+            end
         end
+        return closestPlayer
     end
+ 
+    local pingvalue = nil;
+    local split = nil;
+    local ping = nil;
 
-    local dragend = function(input)
-        if input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch then
-            dragInput = input
+local LocalHL = Instance.new("Highlight") 
+    game:GetService"RunService".Stepped:connect(function()
+        if enabled and Plr.Character ~= nil and Plr.Character:FindFirstChild("HumanoidRootPart") then
+            placemarker.CFrame = CFrame.new(Plr.Character.HumanoidRootPart.Position+Vector3.new(Plr.Character.HumanoidRootPart.AssemblyLinearVelocity.X*getgenv().Settings.NyulaRemake.PREDICTION,Plr.Character.HumanoidRootPart.AssemblyLinearVelocity.Y*getgenv().Settings.NyulaRemake.JUMPPREDICTION,Plr.Character.HumanoidRootPart.AssemblyLinearVelocity.Z*getgenv().Settings.NyulaRemake.PREDICTION))         
+LocalHL.Parent = Plr.Character
+LocalHL.FillTransparency = 0.2
+LocalHL.FillColor = Color3.fromRGB(48, 113, 169)
+LocalHL.OutlineColor = Color3.fromRGB(0,0,0)
+        else
+            placemarker.CFrame = CFrame.new(0, 9999, 0)
+          LocalHL.Parent = nil
         end
+if getgenv().Settings.NyulaRemake.AUTOPRED == true then
+pingvalue = game:GetService("Stats").Network.ServerStatsItem["Data Ping"]:GetValueString()
+             split = string.split(pingvalue,'(')
+             ping = tonumber(split[1])
+ if ping <200 then
+        getgenv().Settings.NyulaRemake.PREDICTION = 0.220
+getgenv().Settings.NyulaRemake.JUMPPREDICTION = tostring(ping/1500)
+    elseif ping < 170 then
+        getgenv().Settings.NyulaRemake.PREDICTION = 0.210
+getgenv().Settings.NyulaRemake.JUMPPREDICTION = tostring(ping/1500)
+    elseif ping < 160 then
+        getgenv().Settings.NyulaRemake.PREDICTION = 0.200
+getgenv().Settings.NyulaRemake.JUMPPREDICTION = tostring(ping/1500)
+    elseif ping < 150 then
+        getgenv().Settings.NyulaRemake.PREDICTION = 0.190
+getgenv().Settings.NyulaRemake.JUMPPREDICTION = tostring(ping/1500)
+    elseif ping < 140 then
+        getgenv().Settings.NyulaRemake.PREDICTION = 0.180
+getgenv().Settings.NyulaRemake.JUMPPREDICTION = tostring(ping/1500)
+    elseif ping < 130 then
+        getgenv().Settings.NyulaRemake.PREDICTION = 0.170
+getgenv().Settings.NyulaRemake.JUMPPREDICTION = tostring(ping/1500)
+    elseif ping < 120 then
+        getgenv().Settings.NyulaRemake.PREDICTION = 0.160
+getgenv().Settings.NyulaRemake.JUMPPREDICTION = tostring(ping/1500)
+    elseif ping < 110 then
+        getgenv().Settings.NyulaRemake.PREDICTION = 0.150
+getgenv().Settings.NyulaRemake.JUMPPREDICTION = tostring(ping/1500)
+    elseif ping < 100 then
+  getgenv().Settings.NyulaRemake.PREDICTION = 0.140
+getgenv().Settings.NyulaRemake.JUMPPREDICTION = tostring(ping/1500)
+ elseif ping < 80 then
+  getgenv().Settings.NyulaRemake.PREDICTION = 0.130340
+getgenv().Settings.NyulaRemake.JUMPPREDICTION = tostring(ping/1500)
+ elseif ping < 70 then
+  getgenv().Settings.NyulaRemake.PREDICTION = 0.120
+getgenv().Settings.NyulaRemake.JUMPPREDICTION = tostring(ping/1500)
+ elseif ping < 65 then
+  getgenv().Settings.NyulaRemake.PREDICTION = 0.110
+getgenv().Settings.NyulaRemake.JUMPPREDICTION = tostring(ping/1500)
+ elseif ping < 50 then
+  getgenv().Settings.NyulaRemake.PREDICTION = 0.13644
+getgenv().Settings.NyulaRemake.JUMPPREDICTION = tostring(ping/1500)
+ elseif ping < 30 then
+  getgenv().Settings.NyulaRemake.PREDICTION = 0.11452476
+getgenv().Settings.NyulaRemake.JUMPPREDICTION = tostring(ping/1500)
     end
-
-    window.Frame = Instance.new("TextButton", window.Main)
-    window.Frame.Name = "main"
-    window.Frame.Position = UDim2.fromScale(0.5, 0.5)
-    window.Frame.BorderSizePixel = 0
-    window.Frame.Size = window.size
-    window.Frame.AutoButtonColor = false
-    window.Frame.Text = ""
-    window.Frame.BackgroundColor3 = window.theme.backgroundcolor
-    window.Frame.AnchorPoint = Vector2.new(0.5, 0.5)
-    updateevent.Event:Connect(function(theme)
-        window.Frame.BackgroundColor3 = theme.backgroundcolor
+end
+if getgenv().Settings.NyulaRemake.Resolver.Enabled then
+if getgenv().Settings.NyulaRemake.Resolver.Type == "Delta Time" then
+print("wsg")
+end
+if getgenv().Settings.NyulaRemake.Resolver.Type == "Recalculator" then
+print("wsg")
+end
+if getgenv().Settings.NyulaRemake.Resolver.Type == "no Y velocity" then
+print("wsg")
+end
+end
     end)
-
-    uis.InputBegan:Connect(function(key)
-        if key.KeyCode == window.hidebutton then
-            window.Frame.Visible = not window.Frame.Visible
+ 
+    local mt = getrawmetatable(game)
+    local old = mt.__namecall
+    setreadonly(mt, false)
+    mt.__namecall = newcclosure(function(...)
+        local args = {...}
+        local vap = {"UpdateMousePos", "GetMousePos", "MousePos", "MOUSE", "MousePosUpdate"}
+        if enabled and getnamecallmethod() == "FireServer" and table.find(vap, args[2]) and getgenv().Settings.NyulaRemake.Enabled and Plr.Character ~= nil and getgenv().Settings.NyulaRemake.LOCKTYPE == "Namecall" then
+            -- args[3] = Plr.Character.HumanoidRootPart.Position+(Plr.Character.HumanoidRootPart.Velocity*accomidationfactor)
+            --[[
+            if getgenv().Settings.NyulaRemake.AIRSHOT == true then
+                if game.Workspace.Players[Plr.Name].Humanoid:GetState() == Enum.HumanoidStateType.Freefall then -- Plr.Character:WaitForChild("Humanoid"):GetState() == Enum.HumanoidStateType.Freefall
+ 
+                    --// Airshot
+                    args[3] = Plr.Character.LeftFoot.Position+(Plr.Character.LeftFoot.Velocity*PredictionValue)
+ 
+                else
+                    args[3] = Plr.Character.HumanoidRootPart.Position+(Plr.Character.HumanoidRootPart.Velocity*PredictionValue)
+ 
+                end
+            else
+                    args[3] = Plr.Character.HumanoidRootPart.Position+(Plr.Character.HumanoidRootPart.Velocity*PredictionValue)
+            end
+            ]]
+            if Prediction == true then
+ 
+            args[3] = Plr.Character.HumanoidRootPart.Position+Vector3.new(Plr.Character.HumanoidRootPart.AssemblyLinearVelocity.X*getgenv().Settings.NyulaRemake.PREDICTION,Plr.Character.HumanoidRootPart.AssemblyLinearVelocity.Y*getgenv().Settings.NyulaRemake.JUMPPREDICTION,Plr.Character.HumanoidRootPart.AssemblyLinearVelocity.Z*getgenv().Settings.NyulaRemake.PREDICTION)
+ 
+            else
+ 
+            args[3] = Plr.Character[SelectedPart].Position
+ 
+            end
+ 
+            return old(unpack(args))
+        end
+        return old(...)
+    end)
+ 
+    game:GetService("RunService").RenderStepped:Connect(function()
+        if getgenv().Settings.NyulaRemake.RESOVLER == true and Plr.Character ~= nil and enabled and getgenv().Settings.NyulaRemake.Enabled then
+        if getgenv().Settings.NyulaRemake.AIRSHOT == true and enabled and Plr.Character ~= nil then
+ 
+            if game.Workspace.Players[Plr.Name].Humanoid:GetState() == Enum.HumanoidStateType.Freefall then -- Plr.Character:WaitForChild("Humanoid"):GetState() == Enum.HumanoidStateType.Freefall
+ 
+                --// Airshot
+ 
+                --// Anchor Check
+ 
+                if Plr.Character ~= nil and Plr.Character.HumanoidRootPart.Anchored == true then
+                    AnchorCount = AnchorCount + 1
+                    if AnchorCount >= MaxAnchor then
+                        Prediction = false
+                        wait(2)
+                        AnchorCount = 0;
+                    end
+                else
+                    Prediction = true
+                    AnchorCount = 0;
+                end
+ 
+                SelectedPart = "LeftFoot"
+ 
+            else
+                --// Anchor Check
+ 
+                if Plr.Character ~= nil and Plr.Character.HumanoidRootPart.Anchored == true then
+                    AnchorCount = AnchorCount + 1
+                    if AnchorCount >= MaxAnchor then
+                        Prediction = false
+                        wait(2)
+                        AnchorCount = 0;
+                    end
+                else
+                    Prediction = true
+                    AnchorCount = 0;
+                end
+ 
+                SelectedPart = "HumanoidRootPart"
+ 
+            end
+            else
+ 
+                --// Anchor Check
+ 
+                if Plr.Character ~= nil and Plr.Character.HumanoidRootPart.Anchored == true then
+                    AnchorCount = AnchorCount + 1
+                    if AnchorCount >= MaxAnchor then
+                        Prediction = false
+                        wait(2)
+                        AnchorCount = 0;
+                    end
+                else
+                    Prediction = true
+                    AnchorCount = 0;
+                end
+ 
+                SelectedPart = "HumanoidRootPart"
+            end
+ 
+        else
+                SelectedPart = "HumanoidRootPart"
         end
     end)
 
-    local function checkIfGuiInFront(Pos)
-        local objects = coregui:GetGuiObjectsAtPosition(Pos.X, Pos.Y)
-        for i,v in pairs(objects) do 
-            if not string.find(v:GetFullName(), window.name) then 
-                table.remove(objects, i)
-            end 
-        end
-        return (#objects ~= 0 and objects[1].AbsolutePosition ~= Pos)
+local Hooks = {}
+local Client = game.Players.LocalPlayer
+
+Hooks[1] = hookmetamethod(Client:GetMouse(), "__index", newcclosure(function(self, index)
+    if index == "Hit" and getgenv().Settings.NyulaRemake.LOCKTYPE == "Index" and enabled and Plr.Character ~= nil and getgenv().Settings.NyulaRemake.Enabled then
+            local position = CFrame.new(Plr.Character.HumanoidRootPart.Position+Vector3.new(Plr.Character.HumanoidRootPart.AssemblyLinearVelocity.X*getgenv().Settings.NyulaRemake.PREDICTION,Plr.Character.HumanoidRootPart.AssemblyLinearVelocity.Y*getgenv().Settings.NyulaRemake.JUMPPREDICTION,Plr.Character.HumanoidRootPart.AssemblyLinearVelocity.Z*getgenv().Settings.NyulaRemake.PREDICTION))
+            return position
+        
     end
+    return Hooks[1](self, index)
+end))
 
-    window.BlackOutline = Instance.new("Frame", window.Frame)
-    window.BlackOutline.Name = "outline"
-    window.BlackOutline.ZIndex = 1
-    window.BlackOutline.Size = window.size + UDim2.fromOffset(2, 2)
-    window.BlackOutline.BorderSizePixel = 0
-    window.BlackOutline.BackgroundColor3 = window.theme.outlinecolor2
-    window.BlackOutline.Position = UDim2.fromOffset(-1, -1)
-    updateevent.Event:Connect(function(theme)
-        window.BlackOutline.BackgroundColor3 = theme.outlinecolor2
-    end)
+end)
 
-    window.Outline = Instance.new("Frame", window.Frame)
-    window.Outline.Name = "outline"
-    window.Outline.ZIndex = 0
-    window.Outline.Size = window.size + UDim2.fromOffset(4, 4)
-    window.Outline.BorderSizePixel = 0
-    window.Outline.BackgroundColor3 = window.theme.outlinecolor
-    window.Outline.Position = UDim2.fromOffset(-2, -2)
-    updateevent.Event:Connect(function(theme)
-        window.Outline.BackgroundColor3 = theme.outlinecolor
-    end)
+GAGEJ:Element("Dropdown", "Aim Type", {options = {"Index", "Namecall"}}, function(tbjl)
+getgenv().Settings.NyulaRemake.LOCKTYPE = tbjl.Dropdown
+end)
 
-    window.BlackOutline2 = Instance.new("Frame", window.Frame)
-    window.BlackOutline2.Name = "outline"
-    window.BlackOutline2.ZIndex = -1
-    window.BlackOutline2.Size = window.size + UDim2.fromOffset(6, 6)
-    window.BlackOutline2.BorderSizePixel = 0
-    window.BlackOutline2.BackgroundColor3 = window.theme.outlinecolor2
-    window.BlackOutline2.Position = UDim2.fromOffset(-3, -3)
-    updateevent.Event:Connect(function(theme)
-        window.BlackOutline2.BackgroundColor3 = theme.outlinecolor2
-    end)
+GAGEJ:Element("TextBox", "Prediction", {placeholder = "Prediction"})
 
-    window.TopBar = Instance.new("Frame", window.Frame)
-    window.TopBar.Name = "top"
-    window.TopBar.Size = UDim2.fromOffset(window.size.X.Offset, window.theme.topheight)
-    window.TopBar.BorderSizePixel = 0
-    window.TopBar.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-    window.TopBar.InputBegan:Connect(dragstart)
-    window.TopBar.InputChanged:Connect(dragend)
-    updateevent.Event:Connect(function(theme)
-        window.TopBar.Size = UDim2.fromOffset(window.size.X.Offset, theme.topheight)
-    end)
+GAGEJ:Element("Button", "Save", {}, function() 
+getgenv().Settings.NyulaRemake.PREDICTION = values.Jaja.GAGEJ.Prediction.Text
+end)
 
-    window.TopGradient = Instance.new("UIGradient", window.TopBar)
-    window.TopGradient.Rotation = 90
-    window.TopGradient.Color = ColorSequence.new({ ColorSequenceKeypoint.new(0.00, window.theme.topcolor), ColorSequenceKeypoint.new(1.00, window.theme.topcolor2) })
-    updateevent.Event:Connect(function(theme)
-        window.TopGradient.Color = ColorSequence.new({ ColorSequenceKeypoint.new(0.00, theme.topcolor), ColorSequenceKeypoint.new(1.00, theme.topcolor2) })
-    end)
+GAGEJ:Element("TextBox", "JumpPrediction", {placeholder = "Jump Prediction"})
 
-    window.NameLabel = Instance.new("TextLabel", window.TopBar)
-    window.NameLabel.TextColor3 = window.theme.toptextcolor
-    window.NameLabel.Text = window.name
-    window.NameLabel.TextXAlignment = Enum.TextXAlignment.Left
-    window.NameLabel.Font = window.theme.font
-    window.NameLabel.Name = "title"
-    window.NameLabel.Position = UDim2.fromOffset(4, -2)
-    window.NameLabel.BackgroundTransparency = 1
-    window.NameLabel.Size = UDim2.fromOffset(190, window.TopBar.AbsoluteSize.Y / 2 - 2)
-    window.NameLabel.TextSize = window.theme.titlesize
-    updateevent.Event:Connect(function(theme)
-        window.NameLabel.TextColor3 = theme.toptextcolor
-        window.NameLabel.Font = theme.font
-        window.NameLabel.TextSize = theme.titlesize
-   
+GAGEJ:Element("Button", "Save", {}, function() getgenv().Settings.NyulaRemake.JUMPPREDICTION = values.Jaja.GAGEJ.JumpPrediction.Text
+end)
+
+GAGEJ:Element("Toggle", "Auto Prediction", nil, function(tbll)
+getgenv().Settings.NyulaRemake.AUTOPRED = tbll.Toggle
+end)
+
+--// ONHIT
+local configs = Jaja:Tab("On Hit")
+
+configs:Element("Toggle", "Hitcham", nil, function(tbll)
+getgenv().Settings.NyulaRemake.OnHit.Hitchams.Enabled = tbll.Toggle
+end)
+
+configs:Element("Toggle", "Hitsound", nil, function(tbll)
+getgenv().Settings.NyulaRemake.OnHit.Hitsounds.Enabled = tbll.Toggle
+end)
+
+--// MODS
+local mamamoblue = Jaja:Tab("Mods")
+
+--// RESOLVERS
+local mamamored = Jaja:Tab("Resolvers")
+
+mamamored:Element("Toggle", "Enabled", nil, function(bruh)
+print(bruh.Toggle)
+end)
+
+mamamored:Element("Dropdown", "Type", {options = {"None", "Delta Time", "Recalculator", "No Y Velocity"}}, function(tbjol)
+print(tbjol.Dropdown)
+end)
