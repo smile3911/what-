@@ -403,46 +403,46 @@ pingvalue = game:GetService("Stats").Network.ServerStatsItem["Data Ping"]:GetVal
              split = string.split(pingvalue,'(')
              ping = tonumber(split[1])
  if ping <200 then
-        getgenv().Settings.NyulaRemake.PREDICTION = 0.320
+        getgenv().Settings.NyulaRemake.PREDICTION = 0.370
 getgenv().Settings.NyulaRemake.JUMPPREDICTION = tostring(ping/1500)
     elseif ping < 170 then
-        getgenv().Settings.NyulaRemake.PREDICTION = 0.310
+        getgenv().Settings.NyulaRemake.PREDICTION = 0.360
 getgenv().Settings.NyulaRemake.JUMPPREDICTION = tostring(ping/1500)
     elseif ping < 160 then
-        getgenv().Settings.NyulaRemake.PREDICTION = 0.300
+        getgenv().Settings.NyulaRemake.PREDICTION = 0.350
 getgenv().Settings.NyulaRemake.JUMPPREDICTION = tostring(ping/1500)
     elseif ping < 150 then
-        getgenv().Settings.NyulaRemake.PREDICTION = 0.290
+        getgenv().Settings.NyulaRemake.PREDICTION = 0.340
 getgenv().Settings.NyulaRemake.JUMPPREDICTION = tostring(ping/1500)
     elseif ping < 140 then
-        getgenv().Settings.NyulaRemake.PREDICTION = 0.280
+        getgenv().Settings.NyulaRemake.PREDICTION = 0.330
 getgenv().Settings.NyulaRemake.JUMPPREDICTION = tostring(ping/1500)
     elseif ping < 130 then
-        getgenv().Settings.NyulaRemake.PREDICTION = 0.270
+        getgenv().Settings.NyulaRemake.PREDICTION = 0.320
 getgenv().Settings.NyulaRemake.JUMPPREDICTION = tostring(ping/1500)
     elseif ping < 120 then
-        getgenv().Settings.NyulaRemake.PREDICTION = 0.260
+        getgenv().Settings.NyulaRemake.PREDICTION = 0.310
 getgenv().Settings.NyulaRemake.JUMPPREDICTION = tostring(ping/1500)
     elseif ping < 110 then
-        getgenv().Settings.NyulaRemake.PREDICTION = 0.250
+        getgenv().Settings.NyulaRemake.PREDICTION = 0.300
 getgenv().Settings.NyulaRemake.JUMPPREDICTION = tostring(ping/1500)
     elseif ping < 100 then
-  getgenv().Settings.NyulaRemake.PREDICTION = 0.240
+  getgenv().Settings.NyulaRemake.PREDICTION = 0.290
 getgenv().Settings.NyulaRemake.JUMPPREDICTION = tostring(ping/1500)
  elseif ping < 80 then
-  getgenv().Settings.NyulaRemake.PREDICTION = 0.230
+  getgenv().Settings.NyulaRemake.PREDICTION = 0.280
 getgenv().Settings.NyulaRemake.JUMPPREDICTION = tostring(ping/1500)
  elseif ping < 70 then
-  getgenv().Settings.NyulaRemake.PREDICTION = 0.220
+  getgenv().Settings.NyulaRemake.PREDICTION = 0.270
 getgenv().Settings.NyulaRemake.JUMPPREDICTION = tostring(ping/1500)
  elseif ping < 65 then
-  getgenv().Settings.NyulaRemake.PREDICTION = 0.210
+  getgenv().Settings.NyulaRemake.PREDICTION = 0.260
 getgenv().Settings.NyulaRemake.JUMPPREDICTION = tostring(ping/1500)
  elseif ping < 50 then
-  getgenv().Settings.NyulaRemake.PREDICTION = 0.200
+  getgenv().Settings.NyulaRemake.PREDICTION = 0.250
 getgenv().Settings.NyulaRemake.JUMPPREDICTION = tostring(ping/1500)
  elseif ping < 30 then
-  getgenv().Settings.NyulaRemake.PREDICTION = 0.190
+  getgenv().Settings.NyulaRemake.PREDICTION = 0.240
 getgenv().Settings.NyulaRemake.JUMPPREDICTION = tostring(ping/1500)
     end
 end
