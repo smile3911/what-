@@ -26,7 +26,7 @@ TextButton.BackgroundColor3 = Color3.fromRGB(255, 0, 0)
 TextButton.BackgroundTransparency = 1.000
 TextButton.Size = UDim2.new(1, 0, 1, 0)
 TextButton.Font = Enum.Font.SourceSans
-TextButton.Text = "smile"
+TextButton.Text = "smile.lol"
 TextButton.TextColor3 = Color3.fromRGB(0, 0, 0)
 TextButton.TextScaled = true
 TextButton.TextSize = 30
@@ -174,7 +174,7 @@ getgenv().getgenv().Settings = {
     }
 }
 
-local SelectedPart = "HumanoidRootPart" --// LowerTorso, UpperTorso, Head
+local SelectedPart = "UpperTorso" --// LowerTorso, UpperTorso, Head
 local Prediction = true
 
 --// Change Prediction,  AutoPrediction Must Be Off
@@ -262,7 +262,7 @@ local Prediction = true
  
     local Tool = Instance.new("Tool")
 Tool.RequiresHandle = false
-Tool.Name = "Astral Lock"
+Tool.Name = "smile.lol"
 Tool.Parent = game.Players.LocalPlayer.Backpack
 
 local player = game.Players.LocalPlayer
